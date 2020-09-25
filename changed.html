@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jidambo</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="changed/toolbar_style.css">
+    <script src="https://dkuchmenko.freshcode.org/static/widget/js/aww3.min.js"></script>
+    <script src="changed/awwtoolbar.js"></script>
+</head>
+<body style="display: flex; justify-content: center; margin: 0;">
+<div style="height: 700px; width: 100%; margin: 10px 40px;">
+    <div id="aww-wrapper" class="aww" style="position: relative; height: 100%; border: 1px solid rgb(71, 176, 75); border-radius: 10px;">
+        <div id="board-menus">
+            <div class="toolbar__box--top-left flex--top mobile--hidden">
+                <div class="logo__box">
+                    <img
+                            id="board-logo"
+                            src=""
+                            width="56"
+                            height="56"
+                            alt="Epihub"
+                            class="logo"
+                    />
+                    <img
+                            src="https://awwapp.com/static/site/app-assets/loader.gif"
+                            alt="Loading..."
+                            class="loader"
+                    />
+                </div>
+                <!-- <div class="toolbar toolbar--big flex mr--1">
+                  <div
+                    id="export-menu-button"
+                    class="toolbar__board toolbar__board--item toolbar__board--button flex--middle mobile--hidden"
+                  >
+                    <img
+                      src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4IiB2aWV3Qm94PSIwIDAgMjQgMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogc2tldGNodG9vbCA0Ni4xICg0NDQ2MykgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+QURGQ0Q1RTMtNzk5NC00N0JELTkxNTUtMzI5MEM4RkIxMkM3PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBza2V0Y2h0b29sLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWMtLy1pY19leHBvcnQiPgogICAgICAgICAgICA8ZyBpZD0iaWMtLy1leHBvcnQiPgogICAgICAgICAgICAgICAgPHBvbHlnb24gaWQ9IlNoYXBlIiBwb2ludHM9IjAgMCAyNCAwIDI0IDI0IDAgMjQiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgIDxnIGlkPSJQYWdlLTEiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDUuMDAwMDAwLCA0LjAwMDAwMCkiIGZpbGw9IiMxQTFBMUEiPgogICAgICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xNCwxNCBMMTQsMTUgQzE0LDE2LjEwNDU2OTUgMTMuMTA0NTY5NSwxNyAxMiwxNyBMMiwxNyBDMC44OTU0MzA1LDE3IDEuMTEwMjIzMDJlLTE2LDE2LjEwNDU2OTUgMCwxNSBMMCwxNCBMMSwxNCBMMSwxNSBDMSwxNS41NTIyODQ3IDEuNDQ3NzE1MjUsMTYgMiwxNiBMMTIsMTYgQzEyLjU1MjI4NDcsMTYgMTMsMTUuNTUyMjg0NyAxMywxNSBMMTMsMTQgTDE0LDE0IFoiIGlkPSJDb21iaW5lZC1TaGFwZSIgZmlsbC1ydWxlPSJub256ZXJvIj48L3BhdGg+CiAgICAgICAgICAgICAgICAgICAgPHBhdGggZD0iTTEwLjU3NzA2NjcsMy4zMDM4MjUgTDcuMzc3MDY2NjcsMC4xNTM4MjUgQzcuMTY5MDY2NjcsLTAuMDUwOTI1IDYuODI5ODY2NjcsLTAuMDUwOTI1IDYuNjIyOTMzMzMsMC4xNTM4MjUgTDMuNDIyOTMzMzMsMy4zMDM4MjUgQzMuMjE0OTMzMzMsMy41MDc1MjUgMy4yMTQ5MzMzMywzLjg0MTQyNSAzLjQyMjkzMzMzLDQuMDQ2MTc1IEMzLjYyOTg2NjY3LDQuMjQ5ODc1IDMuOTY5MDY2NjcsNC4yNDk4NzUgNC4xNzcwNjY2Nyw0LjA0NjE3NSBMNi40NjYxMzMzMywxLjc5Mjg3NSBMNi40NjYxMzMzMywxMy42NTA1MjUgQzYuNDY2MTMzMzMsMTMuOTQwMzI1IDYuNzA2MTMzMzMsMTQuMTc1NTI1IDYuOTk5NDY2NjcsMTQuMTc1NTI1IEM3LjI5Mzg2NjY3LDE0LjE3NTUyNSA3LjUzMjgsMTMuOTQwMzI1IDcuNTMyOCwxMy42NTA1MjUgTDcuNTMyOCwxLjc5Mjg3NSBMOS44MjI5MzMzMyw0LjA0NjE3NSBDOS45Mjg1MzMzMyw0LjE0OTA3NSAxMC4wNjUwNjY3LDQuMTk5NDc1IDEwLjE5OTQ2NjcsNC4xOTk0NzUgQzEwLjMzNDkzMzMsNC4xOTk0NzUgMTAuNDcyNTMzMyw0LjE0ODAyNSAxMC41NzcwNjY3LDQuMDQ2MTc1IEMxMC43ODQsMy44NDE0MjUgMTAuNzg0LDMuNTA3NTI1IDEwLjU3NzA2NjcsMy4zMDM4MjUiIGlkPSJGaWxsLTMiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDYuOTk5NjAwLCA3LjA4Nzg5NCkgcm90YXRlKC0xODAuMDAwMDAwKSB0cmFuc2xhdGUoLTYuOTk5NjAwLCAtNy4wODc4OTQpICI+PC9wYXRoPgogICAgICAgICAgICAgICAgPC9nPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4="
+                      alt="Info"
+                      class="toolbar__button--icon"
+                    />
+                    <div class="tablet--hidden">Export board</div>
+                    <div id="export-menu" class="dropdown dropdown__toolbar fadeInUp">
+                      <ul class="dropdown__menu">
+                        <li class="dropdown__menu--item">
+                          <a id="export-as-pdf" href="#" class="dropdown__menu--link"
+                            >Export as PDF</a
+                          >
+                          <div
+                            id="pdf-quality-menu"
+                            style="left: 210px; width: auto; top: 0;"
+                            class="dropdown dropdown__toolbar fadeInUp"
+                          >
+                            <ul class="dropdown__menu">
+                              <li class="dropdown__menu--item">
+                                <a
+                                  id="0"
+                                  href="#"
+                                  class="dropdown__menu--link pdf-quality-button pdf-quality-selected"
+                                  >Regular quality (recommended)</a
+                                >
+                              </li>
+                              <li class="dropdown__menu--item">
+                                <a
+                                  id="1"
+                                  href="#"
+                                  class="dropdown__menu--link pdf-quality-button"
+                                  >High quality (large file size)</a
+                                >
+                              </li>
+                              <li class="dropdown__menu--item">
+                                <a
+                                  id="2"
+                                  href="#"
+                                  class="dropdown__menu--link pdf-quality-button"
+                                  >Super high quality (very large file size)</a
+                                >
+                              </li>
+                            </ul>
+                          </div>
+                        </li>
+                        <li class="dropdown__menu--item">
+                          <a id="export-as-image" href="#" class="dropdown__menu--link"
+                            >Export as an image</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div> -->
+            </div>
+            <div class="toolbar__box--middle-left">
+                <div
+                        id="main-toolbar"
+                        class="toolbar toolbar--vertical fadeInUp--mobile mobile--hidden"
+                >
+                    <ul class="tools__menu">
+                        <li id="aww-toolbar-select" class="tools__item">
+                            <div
+                                    data-tooltip="Select (V)"
+                                    class="tools__item--button has--tooltip"
+                            >
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-select.svg"
+                                        alt="Select"
+                                />
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-redo" class="tools__item is--hidden">
+                            <div
+                                    data-tooltip="Redo"
+                                    class="aww-toolbar-redo tools__item--button has--tooltip"
+                            >
+                                <div class="redo-icon"></div>
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-undo" class="tools__item">
+                            <div data-tooltip="Undo (U)" class="tools__item--button has--tooltip">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-undo.svg"
+                                        alt="Undo"
+                                />
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-colors" class="tools__item has--toolbox">
+                            <div class="tools__item--button">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-color.svg"
+                                        alt="color"
+                                />
+                                <div class="picked__color"></div>
+                            </div>
+                            <div class="toolbox fadeInLeft">
+                                <ul class="tools__menu tools__menu--inline tools__menu--colors">
+                                    <li id="aww-toolbar-color-0" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #000000;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-1" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #f7412d;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-2" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #47b04b;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-3" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #1194f6;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-4" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #ffc200;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-5" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #9d1bb2;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-6" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #ec1561;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-color-7" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <div
+                                                    style="background-color: #7a5547;"
+                                                    class="predefined__color"
+                                            ></div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="toolbox__separator" style="display: none;"></div>
+                                <ul
+                                        id="custom-colors-row"
+                                        style="display: none;"
+                                        class="tools__menu tools__menu--inlinefloat wrap--8 tools__menu--colors"
+                                >
+                                    <li id="aww-toolbar-add-color" class="tools__item">
+                                        <div class="tools__item--button">
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-upload.svg"
+                                                    alt="Add color"
+                                            />
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="tools__colorwheel" style="display: none;">
+                                    <div class="tools__colorwheel--inner">
+                                        <div class="tools__colorwheel--picker slide--dot"></div>
+                                        <canvas
+                                                width="260"
+                                                height="260"
+                                                style="width: 100%;"
+                                                class="tools__colorwheel--canvas"
+                                        ></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li
+                                id="aww-toolbar-draw"
+                                class="tools__item has--toolbox has--dropdown"
+                        >
+                            <div class="tools__item--button">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-pencil.svg"
+                                        alt="Pen"
+                                />
+                            </div>
+                            <div class="toolbox fadeInLeft">
+                                <ul class="tools__menu tools__menu--inline">
+                                    <li id="aww-toolbar-pencil" class="tools__item">
+                                        <div
+                                                data-tooltip="Pen (P)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-pencil.svg"
+                                                    alt="Pen"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-marker" class="tools__item">
+                                        <div
+                                                data-tooltip="Marker (M)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-marker.svg"
+                                                    alt="Marker"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-arrow" class="tools__item">
+                                        <div
+                                                data-tooltip="Arrow"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGNsaXBQYXRoIGlkPSJiIj48cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBpZD0iYSIgY2xpcC1wYXRoPSJ1cmwoI2IpIj48cGF0aCBkPSJNMjIuNjI0LDE1Ljc3NWEuNi42LDAsMCwwLS44NDgsMEwxOS4yLDE4LjM1MVY3LjJhNC4yLDQuMiwwLDAsMC04LjQsMHY5LjZhMywzLDAsMSwxLTYsMFY1LjY0N0w3LjM3Niw4LjIyM2EuNi42LDAsMSwwLC44NS0uODQ4bC0zLjYtMy42YS42LjYsMCwwLDAtLjg0OCwwbC0zLjYsMy42YS42LjYsMCwwLDAsLjg0OC44NDhMMy42LDUuNjQ3VjE2LjhhNC4yLDQuMiwwLDAsMCw4LjQsMFY3LjJhMywzLDAsMCwxLDYsMFYxOC4zNTFsLTIuNTc1LTIuNTc2YS42LjYsMCwwLDAtLjg0OC44NDhsMy42LDMuNmEuNi42LDAsMCwwLC44NSwwbDMuNi0zLjZhLjYuNiwwLDAsMCwwLS44NDhaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0Ljk5OCA0LjAwMSkiLz48L2c+PC9zdmc+"
+                                                    alt="Arrow"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-lineArrow" class="tools__item">
+                                        <div
+                                                data-tooltip="Line arrow"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGNsaXBQYXRoIGlkPSJiIj48cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBpZD0iYSIgY2xpcC1wYXRoPSJ1cmwoI2IpIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzLjUgNCkiPjxwYXRoIGQ9Ik0yMy4zMDgsNy4xNDZsLTMuOTA5LTNhLjguOCwwLDAsMC0uOTIxLDAsLjQyMy40MjMsMCwwLDAsMCwuNzA3TDIxLjI3NCw3SDIuNjUxQS41OTEuNTkxLDAsMCwwLDIsNy41YS41OTEuNTkxLDAsMCwwLC42NTEuNUgyMS4yNzRsLTIuOCwyLjE0NmEuNDIzLjQyMywwLDAsMCwwLC43MDcuOC44LDAsMCwwLC45MjIsMGwzLjkwOS0zYS40MjMuNDIzLDAsMCwwLDAtLjcwN1oiLz48cGF0aCBkPSJNMjIuMzQ3LDEzSDMuNzI0bDIuOC0yLjE0NmEuNDIzLjQyMywwLDAsMCwwLS43MDcuOC44LDAsMCwwLS45MjEsMGwtMy45MDksM2EuNDIzLjQyMywwLDAsMCwwLC43MDdsMy45MDksM2EuOC44LDAsMCwwLC45MjIsMCwuNDIzLjQyMywwLDAsMCwwLS43MDdMMy43MjUsMTRIMjIuMzQ4QS41OTEuNTkxLDAsMCwwLDIzLDEzLjVhLjU5MS41OTEsMCwwLDAtLjY1MS0uNVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgMy44MjIpIi8+PC9nPjwvZz48L3N2Zz4="
+                                                    alt="Line Arrow"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-lineStraight" class="tools__item">
+                                        <div
+                                                data-tooltip="Line (L)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-lineStraight.svg"
+                                                    alt="Linetool locker"
+                                            />
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="toolbox__separator"></div>
+                                <div class="tools__bigtool">
+                                    <p class="paragraph tools__bigtool--title">Pen size</p>
+                                    <div class="tools__bigtool--slider cf flex--middle">
+                                        <div class="tools__bigtool--value">1</div>
+                                        <div class="tools__bigtool--slide">
+                                            <div class="slide--dot"></div>
+                                            <div class="slide--bg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li
+                                id="aww-toolbar-erase"
+                                class="tools__item has--toolbox has--dropdown"
+                        >
+                            <div class="tools__item--button">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-eraser.svg"
+                                        alt="Eraser"
+                                />
+                            </div>
+                            <div class="toolbox fadeInLeft">
+                                <ul class="tools__menu tools__menu--inline">
+                                    <li id="aww-toolbar-eraser" class="tools__item">
+                                        <div
+                                                data-tooltip="Eraser (E)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-eraser.svg"
+                                                    alt="Eraser"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-elementEraser" class="tools__item">
+                                        <div
+                                                data-tooltip="Element Eraser (E)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiI+PGRlZnM+PGNsaXBQYXRoIGlkPSJiIj48cmVjdCB3aWR0aD0iMzIiIGhlaWdodD0iMzIiLz48L2NsaXBQYXRoPjwvZGVmcz48ZyBpZD0iYSIgY2xpcC1wYXRoPSJ1cmwoI2IpIj48cGF0aCBkPSJNMjEuMjU0LDIxLjkzMywxNy41LDI1Ljk1NSw3LjIyLDI1Ljk0LDQuNjgzLDIzLjU3NGEyLDIsMCwwLDEtLjEtMi44MjdsNy4xNjEtNy42NzksNy4xNjEtNy42OGEyLDIsMCwwLDEsMi44MjctLjFsNi41ODIsNi4xMzhhMiwyLDAsMCwxLC4xLDIuODI3bC03LjE2MSw3LjY3OVptLS4zOS0xLjA0OCw2LjgyLTcuMzEzYTEsMSwwLDAsMC0uMDUtMS40MTRMMjEuMDUyLDYuMDJhMSwxLDAsMCwwLTEuNDEzLjA1bC02LjgyLDcuMzEzLDguMDQ0LDcuNVoiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0wLjA0NyAwLjI0OCkiIGZpbGw9IiMxYTFhMWEiLz48L2c+PC9zdmc+"
+                                                    alt="Element Eraser"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-eraseArea" class="tools__item">
+                                        <div
+                                                data-tooltip="Scissors (S)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-eraseArea.svg"
+                                                    alt="Scissors"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-trash" class="tools__item">
+                                        <div
+                                                data-tooltip="Clear (C)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-trash.svg"
+                                                    alt="Clear page"
+                                            />
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="toolbox__separator"></div>
+                                <div class="tools__bigtool">
+                                    <p class="paragraph tools__bigtool--title">Eraser size</p>
+                                    <div class="tools__bigtool--slider">
+                                        <div class="tools__bigtool--value">1</div>
+                                        <div class="tools__bigtool--slide">
+                                            <div class="slide--dot"></div>
+                                            <div class="slide--bg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li
+                                id="aww-toolbar-shape"
+                                class="tools__item has--toolbox has--dropdown"
+                        >
+                            <div class="tools__item--button">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-rectangle.svg"
+                                        alt="Rectangle"
+                                />
+                            </div>
+
+                            <div class="toolbox fadeInLeft">
+                                <ul class="tools__menu tools__menu--inline">
+                                    <li id="aww-toolbar-rectangle" class="tools__item">
+                                        <div
+                                                data-tooltip="Rectangle (R)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-rectangle.svg"
+                                                    alt="Rectangle"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-rectangleFilled" class="tools__item">
+                                        <div
+                                                data-tooltip="Filled rectangle (R)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-rectangleFilled.svg"
+                                                    alt="Filled rectangle"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-ellipse" class="tools__item">
+                                        <div
+                                                data-tooltip="Ellipse (B)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-ellipse.svg"
+                                                    alt="Ellipse"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-ellipseFilled" class="tools__item">
+                                        <div
+                                                data-tooltip="Filled ellipse (B)"
+                                                class="tools__item--button has--tooltip"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-ellipseFilled.svg"
+                                                    alt="Filled ellipse"
+                                            />
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div class="toolbox__separator"></div>
+                                <div class="tools__bigtool">
+                                    <p class="paragraph tools__bigtool--title">Stroke thickness</p>
+                                    <div class="tools__bigtool--slider">
+                                        <div class="tools__bigtool--value">1</div>
+                                        <div class="tools__bigtool--slide">
+                                            <div class="slide--dot"></div>
+                                            <div class="slide--bg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-text" class="tools__item">
+                            <div data-tooltip="Text (T)" class="tools__item--button has--tooltip">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-text.svg"
+                                        alt="Text"
+                                />
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-postit" class="tools__item">
+                            <div
+                                    data-tooltip="Postit (N)"
+                                    class="tools__item--button has--tooltip"
+                            >
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-postit.svg"
+                                        alt="Post it"
+                                />
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-upload" class="tools__item has--toolbox">
+                            <div data-tooltip="Upload" class="tools__item--button has--tooltip">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ict-upload.svg"
+                                        alt="Add"
+                                />
+                            </div>
+
+                            <div class="toolbox toolbox--flexible fadeInLeft">
+                                <ul class="tools__menu tools__menu--inline">
+                                    <li id="aww-toolbar-image" class="tools__item">
+                                        <div data-tooltip="Upload image" class="tools__item--button">
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-upload-image.svg"
+                                                    alt="Upload image"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-presentation" class="tools__item">
+                                        <div
+                                                data-tooltip="Upload PDF"
+                                                class="tools__item--button is--pro"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-upload-pdf.svg"
+                                                    alt="Upload pdf"
+                                            />
+                                        </div>
+                                    </li>
+                                    <li id="aww-toolbar-presentation" class="tools__item">
+                                        <div
+                                                data-tooltip="Upload PPT"
+                                                class="tools__item--button is--pro"
+                                        >
+                                            <img
+                                                    src="https://awwapp.com/static/site/app-assets/ict-upload-ppt.svg"
+                                                    alt="Upload ppt"
+                                            />
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="toolbar__box--middle-right mobile--hidden">
+                <!-- <div class="tools__minimap">
+                  <div class="tools__minimap--button">
+                    <div class="tools__minimap--visibility"></div>
+                  </div>
+                  <div id="minimap-container" class="tools__minimap--map">
+                    <div
+                      id="minimap-screen-mark"
+                      style="width: 0px; height: 0px; top: 0px; left: 0px;"
+                      class="tools__minimap--vframe"
+                    ></div>
+                    <canvas id="minimap-canvas"></canvas>
+                  </div>
+                </div> -->
+                <div class="toolbar toolbar--vertical toolbar--mini">
+                    <ul class="tools__mini">
+                        <li class="tools__mini--item">
+                            <div
+                                    data-tooltip="Zoom In"
+                                    id="zoom-in"
+                                    class="tools__mini--button has--tooltip"
+                            >
+                                <img
+                                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogc2tldGNodG9vbCA0Ni4xICg0NDQ2MykgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+MjhCNTdGNzQtMEQyOS00Qjk1LUFCMDYtRTRFNEI1Rjk5MzE0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBza2V0Y2h0b29sLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWMtLy1pY196b29tLWluIj4KICAgICAgICAgICAgPGcgaWQ9ImljLS8tem9vbS1pbiI+CiAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iU2hhcGUiIHBvaW50cz0iMCAwIDMyIDAgMzIgMzIgMCAzMiI+PC9wb2x5Z29uPgogICAgICAgICAgICAgICAgPHBhdGggZD0iTTE1LDE1IEwxMCwxNSBMMTAsMTUgQzkuNDQ3NzE1MjUsMTUgOSwxNS40NDc3MTUzIDksMTYgTDksMTYgTDksMTYgQzksMTYuNTUyMjg0NyA5LjQ0NzcxNTI1LDE3IDEwLDE3IEwxMCwxNyBMMTUsMTcgTDE1LDIyIEMxNSwyMi41NTIyODQ3IDE1LjQ0NzcxNTMsMjMgMTYsMjMgQzE2LjU1MjI4NDcsMjMgMTcsMjIuNTUyMjg0NyAxNywyMiBMMTcsMTcgTDIyLDE3IEMyMi41NTIyODQ3LDE3IDIzLDE2LjU1MjI4NDcgMjMsMTYgTDIzLDE2IEMyMywxNS40NDc3MTUzIDIyLjU1MjI4NDcsMTUgMjIsMTUgTDIyLDE1IEwxNywxNSBMMTcsMTAgQzE3LDkuNDQ3NzE1MjUgMTYuNTUyMjg0Nyw5IDE2LDkgTDE2LDkgTDE2LDkgQzE1LjQ0NzcxNTMsOSAxNSw5LjQ0NzcxNTI1IDE1LDEwIEwxNSwxMCBMMTUsMTUgWiIgaWQ9IkNvbWJpbmVkLVNoYXBlIiBmaWxsPSIjMUExQTFBIj48L3BhdGg+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg=="
+                                />
+                            </div>
+                        </li>
+                        <li id="zoom-level-text" class="tools__mini--text">100%</li>
+                        <li class="tools__mini--item">
+                            <div
+                                    data-tooltip="Zoom Out"
+                                    id="zoom-out"
+                                    class="tools__mini--button has--tooltip"
+                            >
+                                <img
+                                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogc2tldGNodG9vbCA0Ni4xICg0NDQ2MykgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+RDUwOTUxRkYtODNFOS00OERBLUFGNjctMjNENzEwMzkwNDg0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBza2V0Y2h0b29sLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWMtLy1pY196b29tLW91dCI+CiAgICAgICAgICAgIDxnIGlkPSJpYy0vLXpvb20tb3V0Ij4KICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJTaGFwZSIgcG9pbnRzPSIwIDAgMzIgMCAzMiAzMiAwIDMyIj48L3BvbHlnb24+CiAgICAgICAgICAgICAgICA8cmVjdCBpZD0iUmVjdGFuZ2xlLTIwIiBmaWxsPSIjMUExQTFBIiB4PSI5IiB5PSIxNSIgd2lkdGg9IjE0IiBoZWlnaHQ9IjIiIHJ4PSIxIj48L3JlY3Q+CiAgICAgICAgICAgIDwvZz4KICAgICAgICA8L2c+CiAgICA8L2c+Cjwvc3ZnPg=="
+                                />
+                            </div>
+                        </li>
+                        <li class="tools__mini--separator"></li>
+                        <li class="tools__mini--item">
+                            <div
+                                    data-tooltip="Fullscreen"
+                                    id="fullscreen"
+                                    class="tools__mini--button has--tooltip"
+                            >
+                                <img
+                                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogc2tldGNodG9vbCA0Ni4xICg0NDQ2MykgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+NjRGQkZDQ0QtN0U3Mi00NjMwLUIwQjgtNkYzRTE4RjBGOUY2PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBza2V0Y2h0b29sLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWMtLy1pY19mdWxsc2NyZWVuIj4KICAgICAgICAgICAgPGcgaWQ9ImljLS8tZnVsbHNjcmVlbiI+CiAgICAgICAgICAgICAgICA8cG9seWdvbiBpZD0iU2hhcGUiIGZpbGwtb3BhY2l0eT0iMC4yIiBmaWxsPSIjRkYwMDAwIiBvcGFjaXR5PSIwIiBwb2ludHM9IjAgMCAzMiAwIDMyIDMyIDAgMzIiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0yNS40OTkxLDYgTDIwLjQ5OTEsNiBDMjAuMjIzMSw2IDE5Ljk5OTEsNi4yMjQgMTkuOTk5MSw2LjUgQzE5Ljk5OTEsNi43NzYgMjAuMjIzMSw3IDIwLjQ5OTEsNyBMMjQuMjkyMSw3IEwxOC4xNDYxLDEzLjE0NiBDMTcuOTUxMSwxMy4zNDEgMTcuOTUxMSwxMy42NTggMTguMTQ2MSwxMy44NTQgQzE4LjI0NDEsMTMuOTUxIDE4LjM3MjEsMTMuOTk5IDE4LjQ5OTEsMTMuOTk5IEMxOC42MjYxLDEzLjk5OSAxOC43NTUxLDEzLjk1IDE4Ljg1MjEsMTMuODU0IEwyNC45OTkxLDcuNzA3IEwyNC45OTkxLDExLjUgQzI0Ljk5OTEsMTEuNzc2IDI1LjIyMzEsMTIgMjUuNDk5MSwxMiBDMjUuNzc1MSwxMiAyNS45OTkxLDExLjc3NiAyNS45OTkxLDExLjUgTDI1Ljk5OTEsNi41IEMyNS45OTkxLDYuMjI0IDI1Ljc3NTEsNiAyNS40OTkxLDYiIGlkPSJGaWxsLTEiIGZpbGw9IiMxQTFBMUEiPjwvcGF0aD4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0xMy44NTMxLDE4LjE0NjUgQzEzLjY1ODEsMTcuOTUyNSAxMy4zNDExLDE3Ljk1MjUgMTMuMTQ2MSwxOC4xNDY1IEw3LjAwMDEsMjQuMjkyNSBMNy4wMDAxLDIwLjUwMDUgQzcuMDAwMSwyMC4yMjM1IDYuNzc2MSwyMC4wMDA1IDYuNTAwMSwyMC4wMDA1IEM2LjIyNDEsMjAuMDAwNSA2LjAwMDEsMjAuMjIzNSA2LjAwMDEsMjAuNTAwNSBMNi4wMDAxLDI1LjUwMDUgQzYuMDAwMSwyNS43NzY1IDYuMjI0MSwyNi4wMDA1IDYuNTAwMSwyNi4wMDA1IEwxMS41MDAxLDI2LjAwMDUgQzExLjc3NjEsMjYuMDAwNSAxMi4wMDAxLDI1Ljc3NjUgMTIuMDAwMSwyNS41MDA1IEMxMi4wMDAxLDI1LjIyMzUgMTEuNzc2MSwyNS4wMDA1IDExLjUwMDEsMjUuMDAwNSBMNy43MDcxLDI1LjAwMDUgTDEzLjg1MzEsMTguODUzNSBDMTQuMDQ4MSwxOC42NTg1IDE0LjA0ODEsMTguMzQwNSAxMy44NTMxLDE4LjE0NjUiIGlkPSJGaWxsLTQiIGZpbGw9IiMxQTFBMUEiPjwvcGF0aD4KICAgICAgICAgICAgPC9nPgogICAgICAgIDwvZz4KICAgIDwvZz4KPC9zdmc+"
+                                />
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-pan" class="tools__mini--item">
+                            <div
+                                    data-tooltip="Pan"
+                                    id="pan"
+                                    class="tools__mini--button has--tooltip"
+                            >
+                                <img
+                                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMzJweCIgaGVpZ2h0PSIzMnB4IiB2aWV3Qm94PSIwIDAgMzIgMzIiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogc2tldGNodG9vbCA0Ni4xICg0NDQ2MykgLSBodHRwOi8vd3d3LmJvaGVtaWFuY29kaW5nLmNvbS9za2V0Y2ggLS0+CiAgICA8dGl0bGU+QTNCQUM1N0YtNTY1Qy00QjlBLTk4RkEtMkQxMDM0RDUzRTY0PC90aXRsZT4KICAgIDxkZXNjPkNyZWF0ZWQgd2l0aCBza2V0Y2h0b29sLjwvZGVzYz4KICAgIDxkZWZzPjwvZGVmcz4KICAgIDxnIGlkPSJTeW1ib2xzIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iaWMtLy1pY19wYW4tdG9vbCI+CiAgICAgICAgICAgIDxnIGlkPSJpYy0vLXBhbi10b29sIj4KICAgICAgICAgICAgICAgIDxwb2x5Z29uIGlkPSJib3VuZHMiIGZpbGwtb3BhY2l0eT0iMC4yIiBmaWxsPSIjRkYwMDAwIiBvcGFjaXR5PSIwIiBwb2ludHM9IjAgMCAzMiAwIDMyIDMyIDAgMzIiPjwvcG9seWdvbj4KICAgICAgICAgICAgICAgIDxwYXRoIGQ9Ik0yMi45OTUyLDE1LjUgQzIyLjk5NTIsMTguMzY3IDIyLjUzODIsMjAuNzk2IDIxLjY3MzIsMjIuNTI1IEMyMS4xMDgyLDIzLjY1NCAyMC4wOTkyLDI1IDE4LjQ5NTIsMjUgTDEzLjUwNTIsMjUgQzEzLjQ2NjIsMjQuOTk3IDEzLjA0NTIsMjQuOTUgMTIuNDEwMiwyNC40NzUgQzExLjc3NzIsMjQuMDAxIDEwLjgwNjIsMjMuMDAzIDkuNzcyMiwyMC45MzYgQzcuNzQ1MiwxNi44ODEgNy4xMjIyLDE1LjYwNCA3LjExNjIsMTUuNTkyIEM3LjExNTIsMTUuNTkgNy4xMTUyLDE1LjU4OSA3LjExNDIsMTUuNTg4IEM2Ljg2MzIsMTUuMDg1IDcuMDQxMiwxNC40MjYgNy41MDMyLDE0LjE0OCBDNy43MTEyLDE0LjAyMyA3Ljk1NDIsMTMuOTkxIDguMTg4MiwxNC4wNTQgQzguNDM2MiwxNC4xMjIgOC42NDUyLDE0LjI5IDguNzc0MiwxNC41MjUgQzguNzc3MiwxNC41MjkgOC43NzkyLDE0LjUzMyA4Ljc4MTIsMTQuNTM2IEwxMC4zNDMyLDE3LjI0MSBDMTAuNjYxMiwxNy44MjQgMTEuMDIwMiwxOC4wNjkgMTEuNDA5MiwxNy45NyBDMTEuODAwMiwxNy44NzEgMTEuOTk2MiwxNy40OCAxMS45OTYyLDE2LjgxMiBMMTEuOTk2Miw5IEMxMS45OTYyLDguNDQ5IDEyLjQ0NTIsOCAxMi45OTYyLDggQzEzLjU0NzIsOCAxMy45OTYyLDguNDQ5IDEzLjk5NjIsOSBMMTMuOTk2MiwxNS41IEMxMy45OTYyLDE1Ljc3NiAxNC4yMjAyLDE2IDE0LjQ5NjIsMTYgQzE0Ljc3MjIsMTYgMTQuOTk2MiwxNS43NzYgMTQuOTk2MiwxNS41IEwxNC45OTYyLDggQzE0Ljk5NjIsNy40NDkgMTUuNDQ1Miw3IDE1Ljk5NjIsNyBDMTYuNTQ3Miw3IDE2Ljk5NjIsNy40NDkgMTYuOTk2Miw4IEwxNi45OTYyLDE1LjUgQzE2Ljk5NjIsMTUuNzc2IDE3LjIyMDIsMTYgMTcuNDk2MiwxNiBDMTcuNzcyMiwxNiAxNy45OTYyLDE1Ljc3NiAxNy45OTYyLDE1LjUgTDE3Ljk5NjIsOSBDMTcuOTk2Miw4LjQ0OSAxOC40NDUyLDggMTguOTk2Miw4IEMxOS41NDcyLDggMTkuOTk2Miw4LjQ0OSAxOS45OTYyLDkgTDE5Ljk5NjIsMTYuNSBDMTkuOTk2MiwxNi43NzYgMjAuMjIwMiwxNyAyMC40OTYyLDE3IEMyMC43NzIyLDE3IDIwLjk5NjIsMTYuNzc2IDIwLjk5NjIsMTYuNSBMMjAuOTk2MiwxMiBDMjAuOTk2MiwxMS40NDkgMjEuNDQ1MiwxMSAyMS45OTYyLDExIEMyMi41NDcyLDExIDIyLjk5NjIsMTEuNDQ5IDIyLjk5NjIsMTIgTDIyLjk5NjIsMTUuNSBMMjIuOTk1MiwxNS41IFogTTIxLjk5NTIsMTAgQzIxLjYzMjIsMTAgMjEuMjg5MiwxMC4wOTggMjAuOTk1MiwxMC4yNyBMMjAuOTk1Miw5IEMyMC45OTUyLDcuODk2IDIwLjA5OTIsNyAxOC45OTUyLDcgQzE4LjU4MzIsNyAxOC4yMDEyLDcuMTI1IDE3Ljg4MjIsNy4zMzkgQzE3LjYwODIsNi41NjEgMTYuODY2Miw2IDE1Ljk5NTIsNiBDMTUuMTI0Miw2IDE0LjM4MjIsNi41NjEgMTQuMTA4Miw3LjMzOSBDMTMuNzkwMiw3LjEyNSAxMy40MDcyLDcgMTIuOTk1Miw3IEMxMS44OTEyLDcgMTAuOTk1Miw3Ljg5NiAxMC45OTUyLDkgTDEwLjk5NTIsMTYuMzczIEw5LjY0OTIsMTQuMDQgQzkuMzg4MiwxMy41NjQgOC45NjIyLDEzLjIyNyA4LjQ1MDIsMTMuMDg3IEM3Ljk1MTIsMTIuOTUxIDcuNDMyMiwxMy4wMjMgNi45ODgyLDEzLjI4OSBDNi4wODEyLDEzLjgzMyA1LjczNTIsMTUuMDYzIDYuMjE4MiwxNi4wMzEgQzYuMjQ4MiwxNi4wOTIgNi44ODYyLDE3LjM5OCA4Ljg3ODIsMjEuMzgxIEM5LjgxNTIsMjMuMjU2IDEwLjg0NTIsMjQuNTk3IDExLjkzNjIsMjUuMzY1IEMxMi43OTQyLDI1Ljk2OCAxMy4zODYyLDI1Ljk5OSAxMy40OTYyLDI1Ljk5OSBMMTguNDk2MiwyNS45OTkgQzE5LjM0NzIsMjUuOTk5IDIwLjEzODIsMjUuNzIyIDIwLjg0OTIsMjUuMTc3IEMyMS41MTUyLDI0LjY2NCAyMi4wOTUyLDIzLjkyMiAyMi41NjgyLDIyLjk3MyBDMjMuNTAyMiwyMS4xMDUgMjMuOTk2MiwxOC41MjEgMjMuOTk2MiwxNS40OTkgTDIzLjk5NjIsMTEuOTk5IEMyMy45OTYyLDEwLjg5NiAyMy4wOTkyLDkuOTk5IDIxLjk5NjIsOS45OTkgTDIxLjk5NTIsMTAgWiIgaWQ9IkZpbGwtMSIgZmlsbD0iIzFBMUExQSI+PC9wYXRoPgogICAgICAgICAgICA8L2c+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4="
+                                />
+                            </div>
+                        </li>
+                        <li id="aww-toolbar-center" class="tools__mini--item">
+                            <div
+                                    data-tooltip="Center"
+                                    id="center"
+                                    class="tools__mini--button has--tooltip"
+                            >
+                                <img
+                                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KPHBhdGggZD0iTTE4LjUgN2MtMC4yNzYgMC0wLjUtMC4yMjQtMC41LTAuNXYtMmMwLTAuMjc2LTAuMjI0LTAuNS0wLjUtMC41aC0yYy0wLjI3NiAwLTAuNS0wLjIyNC0wLjUtMC41czAuMjI0LTAuNSAwLjUtMC41aDJjMC44MjcgMCAxLjUgMC42NzMgMS41IDEuNXYyYzAgMC4yNzYtMC4yMjQgMC41LTAuNSAwLjV6IiBmaWxsPSIjMDAwMDAwIj48L3BhdGg+CjxwYXRoIGQ9Ik0wLjUgN2MtMC4yNzYgMC0wLjUtMC4yMjQtMC41LTAuNXYtMmMwLTAuODI3IDAuNjczLTEuNSAxLjUtMS41aDJjMC4yNzYgMCAwLjUgMC4yMjQgMC41IDAuNXMtMC4yMjQgMC41LTAuNSAwLjVoLTJjLTAuMjc2IDAtMC41IDAuMjI0LTAuNSAwLjV2MmMwIDAuMjc2LTAuMjI0IDAuNS0wLjUgMC41eiIgZmlsbD0iIzAwMDAwMCI+PC9wYXRoPgo8cGF0aCBkPSJNMy41IDE4aC0yYy0wLjgyNyAwLTEuNS0wLjY3My0xLjUtMS41di0yYzAtMC4yNzYgMC4yMjQtMC41IDAuNS0wLjVzMC41IDAuMjI0IDAuNSAwLjV2MmMwIDAuMjc2IDAuMjI0IDAuNSAwLjUgMC41aDJjMC4yNzYgMCAwLjUgMC4yMjQgMC41IDAuNXMtMC4yMjQgMC41LTAuNSAwLjV6IiBmaWxsPSIjMDAwMDAwIj48L3BhdGg+CjxwYXRoIGQ9Ik0xNy41IDE4aC0yYy0wLjI3NiAwLTAuNS0wLjIyNC0wLjUtMC41czAuMjI0LTAuNSAwLjUtMC41aDJjMC4yNzYgMCAwLjUtMC4yMjQgMC41LTAuNXYtMmMwLTAuMjc2IDAuMjI0LTAuNSAwLjUtMC41czAuNSAwLjIyNCAwLjUgMC41djJjMCAwLjgyNy0wLjY3MyAxLjUtMS41IDEuNXoiIGZpbGw9IiMwMDAwMDAiPjwvcGF0aD4KPHBhdGggZD0iTTExLjUgMTBoLTEuNXYtMS41YzAtMC4yNzYtMC4yMjQtMC41LTAuNS0wLjVzLTAuNSAwLjIyNC0wLjUgMC41djEuNWgtMS41Yy0wLjI3NiAwLTAuNSAwLjIyNC0wLjUgMC41czAuMjI0IDAuNSAwLjUgMC41aDEuNXYxLjVjMCAwLjI3NiAwLjIyNCAwLjUgMC41IDAuNXMwLjUtMC4yMjQgMC41LTAuNXYtMS41aDEuNWMwLjI3NiAwIDAuNS0wLjIyNCAwLjUtMC41cy0wLjIyNC0wLjUtMC41LTAuNXoiIGZpbGw9IiMwMDAwMDAiPjwvcGF0aD4KPC9zdmc+Cg=="
+                                        style="margin: 6px;"
+                                />
+                            </div>
+                        </li>
+                        <li
+                                id="aww-toolbar-location"
+                                class="tools__mini--item"
+                                style="display: none;"
+                        >
+                            <div id="location" class="tools__mini--button">
+                                <img
+                                        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CgogPGc+CiAgPHRpdGxlPmJhY2tncm91bmQ8L3RpdGxlPgogIDxyZWN0IGZpbGw9Im5vbmUiIGlkPSJjYW52YXNfYmFja2dyb3VuZCIgaGVpZ2h0PSIyMiIgd2lkdGg9IjIyIiB5PSItMSIgeD0iLTEiLz4KIDwvZz4KIDxnPgogIDx0aXRsZT5MYXllciAxPC90aXRsZT4KICA8cGF0aCBpZD0ic3ZnXzEiIGZpbGw9IiMwMDAwMDAiIGQ9Im04LjUsMjBjLTAuMDQzLDAgLTAuMDg3LC0wLjAwNiAtMC4xMywtMC4wMTdjLTAuMjE4LC0wLjA1OSAtMC4zNywtMC4yNTcgLTAuMzcsLTAuNDgzbDAsLTcuNWwtNy41LDBjLTAuMjI2LDAgLTAuNDI0LC0wLjE1MiAtMC40ODMsLTAuMzdzMC4wMzcsLTAuNDQ5IDAuMjMyLC0wLjU2MmwxOSwtMTFjMC4xOTYsLTAuMTEzIDAuNDQ0LC0wLjA4MSAwLjYwNCwwLjA3OXMwLjE5MywwLjQwOCAwLjA3OSwwLjYwNGwtMTEsMTljLTAuMDkxLDAuMTU3IC0wLjI1OCwwLjI0OSAtMC40MzMsMC4yNDlsMC4wMDEsMHptLTYuMTM4LC05bDYuMTM4LDBjMC4yNzYsMCAwLjUsMC4yMjQgMC41LDAuNWwwLDYuMTM4bDkuMTI4LC0xNS43NjZsLTE1Ljc2Niw5LjEyOHoiLz4KICA8bGluZSBzdHJva2UtbGluZWNhcD0idW5kZWZpbmVkIiBzdHJva2UtbGluZWpvaW49InVuZGVmaW5lZCIgaWQ9InN2Z181IiB5Mj0iMTYuOTI0NTYyIiB4Mj0iMTYuNjYyNDUyIiB5MT0iMy4wMTE1MzciIHgxPSIzLjQxODMyMyIgZmlsbC1vcGFjaXR5PSJudWxsIiBzdHJva2Utb3BhY2l0eT0ibnVsbCIgc3Ryb2tlLXdpZHRoPSIxLjA3IiBzdHJva2U9IiMwMDAiIGZpbGw9Im5vbmUiLz4KIDwvZz4KPC9zdmc+"
+                                        style="margin: 6px;"
+                                        class="location--disabled"
+                                />
+                                <img
+                                        src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0ZWQgYnkgSWNvTW9vbi5pbyAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj4KPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgdmlld0JveD0iMCAwIDIwIDIwIj4KPHBhdGggZD0iTTguNSAyMGMtMC4wNDMgMC0wLjA4Ny0wLjAwNi0wLjEzLTAuMDE3LTAuMjE4LTAuMDU5LTAuMzctMC4yNTctMC4zNy0wLjQ4M3YtNy41aC03LjVjLTAuMjI2IDAtMC40MjQtMC4xNTItMC40ODMtMC4zN3MwLjAzNy0wLjQ0OSAwLjIzMi0wLjU2MmwxOS0xMWMwLjE5Ni0wLjExMyAwLjQ0NC0wLjA4MSAwLjYwNCAwLjA3OXMwLjE5MyAwLjQwOCAwLjA3OSAwLjYwNGwtMTEgMTljLTAuMDkxIDAuMTU3LTAuMjU4IDAuMjQ5LTAuNDMzIDAuMjQ5ek0yLjM2MiAxMWg2LjEzOGMwLjI3NiAwIDAuNSAwLjIyNCAwLjUgMC41djYuMTM4bDkuMTI4LTE1Ljc2Ni0xNS43NjYgOS4xMjh6IiBmaWxsPSIjMDAwMDAwIj48L3BhdGg+Cjwvc3ZnPgo="
+                                        style="margin: 6px;"
+                                        class="location--enabled is--hidden"
+                                />
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="multipage-nav" class="toolbar__box--bottom-left mobile--centering">
+                <div class="toolbar flex--middle">
+                    <div class="pagination flex--middle">
+                        <div id="prev-page" class="arrow arrow--left flex--middle is--disabled">
+                            <img
+                                    src="https://awwapp.com/static/site/app-assets/ic-pages-left.svg"
+                                    alt="Previous page"
+                            />
+                        </div>
+                        <div class="pagination--numbers">
+                            <span class="pagination--boards">1/1</span>
+                        </div>
+                        <div
+                                id="next-page"
+                                class="arrow arrow--right flex--middle is--pro is--hidden"
+                        >
+                            <img
+                                    src="https://awwapp.com/static/site/app-assets/ic-pages-right.svg"
+                                    alt="Next page"
+                            />
+                        </div>
+                        <div id="new-page" class="arrow arrow--right flex--middle is--pro">
+                            <img
+                                    src="https://awwapp.com/static/site/app-assets/ict-upload.svg"
+                                    alt="New page"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="toolbar__box--bottom-right">
+              <div class="chat chat__box fadeInUp is--visible">
+                <div class="chat__header chat__header--incall is--hidden">
+                  <div class="grid grid--gapless">
+                    <div class="grid__column grid__column--middle">
+                      <div class="grid grid--gapless grid--middle">
+                        <div class="grid__column grid__column--shrink mr--1">
+                          <span class="chat__username--noneditable">undefined</span>
+                        </div>
+                        <div
+                          class="grid__column grid__column--stretch flex flex--middle flex--start"
+                        >
+                          <img
+                            src="https://awwapp.com/static/site/app-assets/ic-voiceactive.svg"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat__header chat__header--normal-state">
+                  <div class="grid grid--gapless grid--middle">
+                    <div class="grid__column grid__column--shrink mr--1 flex">
+                      <img
+                        id="change-name-done-button"
+                        src="https://awwapp.com/static/site/app-assets/ic-confirm-change.svg"
+                        class="after--editing"
+                      />
+                      <img
+                        id="change-name-button"
+                        src="https://awwapp.com/static/site/app-assets/ic-edit-name.svg"
+                        class="before--editing"
+                      />
+                    </div>
+                    <div class="grid__column grid__column--middle">
+                      <input readonly="" value="Name" class="chat__username" />
+                    </div>
+                  </div>
+                </div>
+                <div class="chat__content">
+                  <div class="chat__messages"></div>
+                </div>
+                <div style="height: 48px;" class="chat__footer">
+                  <textarea placeholder="Type here" class="chat__input"></textarea>
+                </div>
+              </div>
+              <div id="chat-button" class="toolbar__button toolbar__button--boxsm">
+                <img
+                  src="https://awwapp.com/static/site/app-assets/ic-chat.svg"
+                  class="chat--closed"
+                />
+                <img
+                  src="https://awwapp.com/static/site/app-assets/ic-close-black.svg"
+                  class="chat--opened"
+                />
+              </div>
+            </div> -->
+            <div
+                    id="spinnable"
+                    style="
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      display: none;
+      z-index: 100;
+      touch-action: none;
+    "
+                    class="no--select"
+            >
+                <div style="transform-origin: center;" class="drop drop--mini">
+                    <div class="rotate--me">
+                        <div class="drop__elements">
+                            <div class="rotator flex--middle">
+                                <img
+                                        src="https://awwapp.com/static/site/app-assets/ic-rotate.svg"
+                                        alt=""
+                                />
+                            </div>
+                            <div class="grip grip--tl"></div>
+                            <div class="grip grip--tc"></div>
+                            <div class="grip grip--tr"></div>
+                            <div class="grip grip--ml"></div>
+                            <div class="grip grip--mr"></div>
+                            <div class="grip grip--bl"></div>
+                            <div class="grip grip--bc"></div>
+                            <div class="grip grip--br"></div>
+                        </div>
+                        <img style="touch-action: none;" class="no--select uploaded--img" />
+                    </div>
+
+                    <div class="drop__buttons">
+                        <a href="#" class="button button--whitered button--big mr--1 js-cancel">
+                            <img
+                                    src="https://awwapp.com/static/site/app-assets/ic-close-red.svg"
+                            />
+                        </a>
+                        <a href="#" class="button js-ok button--big">Place image</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+    var aww = new AwwBoard('#aww-wrapper', {
+        multiPage: true,
+        sendUserPointer: false,
+        showUserPointers: true,
+        enableContextMenu: true,
+        apiKey: '43ec6187-86f9-4eda-92d9-5fb88fd98d5f',
+        boardLink: 'u4rjlby3dkih8',
+        userId: 'test_user_id'
+    });
+    initToolbar();
+</script>
+</body>

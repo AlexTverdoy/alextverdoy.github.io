@@ -5,65 +5,65 @@
 const COLOR_WHEEL_PATH = './color-wheel.png';
 
 let VISIBLE_CLASS = 'is--visible',
-HIDDEN_CLASS = 'is--hidden',
-SELECTED_CLASS = 'is--selected',
-LOADING_CLASS = 'is--loading',
-EDITING_CLASS = 'is--editing',
-DISABLED_CLASS = 'is--disabled',
-OPEN_CLASS = 'is--open',
-AWW_COLOR = '#3DC476',
-CANVAS_STARTING_ZOOM_LEVEL = 100,
-ASSETS_PATH = 'https://awwapp.com/static/site/app-assets', // TODO set your path to assets
-MAX_CUSTOM_COLORS = 7,
-DEFAULT_TOOLBAR = {
-  select: {
-    tools: ['select'],
-    currentTool: 'select'
-  },
-  undo: {
-    tools: ['undo'],
-    currentTool: 'undo'
-  },
-  colors: {
-    tools: ['color']
-  },
-  draw: {
-    tools: ['pencil', 'marker', 'arrow', 'lineArrow', 'lineStraight'],
-    currentTool: 'pencil',
-    selected: true,
-    size: 2
-  },
-  erase: {
-    tools: ['eraser', 'elementEraser', 'eraseArea', 'trash'],
-    currentTool: 'eraser',
-    size: 10
-  },
-  shape: {
-    tools: ['rectangle', 'rectangleFilled', 'ellipse', 'ellipseFilled'],
-    currentTool: 'rectangle',
-    size: 2
-  },
-  text: {
-    tools: ['text'],
-    currentTool: 'text'
-  },
-  postit: {
-    tools: ['postit'],
-    currentTool: 'postit'
-  },
-  upload: {
-    tools: ['image', 'presentation', 'presentation', 'gdrive-upload']
-  }
-};
+    HIDDEN_CLASS = 'is--hidden',
+    SELECTED_CLASS = 'is--selected',
+    LOADING_CLASS = 'is--loading',
+    EDITING_CLASS = 'is--editing',
+    DISABLED_CLASS = 'is--disabled',
+    OPEN_CLASS = 'is--open',
+    AWW_COLOR = '#3DC476',
+    CANVAS_STARTING_ZOOM_LEVEL = 100,
+    ASSETS_PATH = 'https://awwapp.com/static/site/app-assets', // TODO set your path to assets
+    MAX_CUSTOM_COLORS = 7,
+    DEFAULT_TOOLBAR = {
+        select: {
+            tools: ['select'],
+            currentTool: 'select'
+        },
+        undo: {
+            tools: ['undo'],
+            currentTool: 'undo'
+        },
+        colors: {
+            tools: ['color']
+        },
+        draw: {
+            tools: ['pencil', 'marker', 'arrow', 'lineArrow', 'lineStraight'],
+            currentTool: 'pencil',
+            selected: true,
+            size: 2
+        },
+        erase: {
+            tools: ['eraser', 'elementEraser', 'eraseArea', 'trash'],
+            currentTool: 'eraser',
+            size: 10
+        },
+        shape: {
+            tools: ['rectangle', 'rectangleFilled', 'ellipse', 'ellipseFilled'],
+            currentTool: 'rectangle',
+            size: 2
+        },
+        text: {
+            tools: ['text'],
+            currentTool: 'text'
+        },
+        postit: {
+            tools: ['postit'],
+            currentTool: 'postit'
+        },
+        upload: {
+            tools: ['image', 'presentation', 'presentation', 'gdrive-upload']
+        }
+    };
 let COLORS = [
-  '#000000',
-  '#f7412d',
-  '#47b04b',
-  '#1194f6',
-  '#ffc200',
-  '#9d1bb2',
-  '#ec1561',
-  '#7a5547'
+    '#000000',
+    '#f7412d',
+    '#47b04b',
+    '#1194f6',
+    '#ffc200',
+    '#9d1bb2',
+    '#ec1561',
+    '#7a5547'
 ];
 let SIZES = [2, 4, 6, 9, 15, 25, 40];
 let TOOLS = ['pencil', 'eraser', 'elementEraser', 'eraseArea', 'text', 'image', 'undo', 'trash', 'pan', 'lineStraight', 'arrow', 'lineArrow', 'rectangle', 'rectangleFilled', 'ellipse', 'ellipseFilled', 'marker', 'select', 'postit', 'presentation'];
@@ -71,69 +71,70 @@ let toolbarPrefix = 'aww-toolbar-';
 // let aww = <BOARD_OBJECT>; // TODO set AwwBoard element variable here to equal aww if it's named differently
 
 let boardMenus,
-  awwContainer,
-  awwCanvasWrapper,
-  toolbar,
-  colorWheelCanvas,
-  colorWheelPicker,
-  customColorsRow,
-  addColorPlusEl,
-  boardNameField,
-  loader,
-  accountButton,
-  loginRegisterButton,
-  mobileLoginRegisterButton,
-  chatNameInput,
-  changeNameDoneButton,
-  changeNameButton,
-  chatbox,
-  chatMessages,
-  chatContent,
-  chatHeaderNormal,
-  chatInput,
-  nextPageButton,
-  prevPageButton,
-  newPageButton,
-  gotoPageButton,
-  zoomLevelText,
-  panButton,
-  fullscreen,
-  fullscreenIcon,
-  redoButton;
+    awwContainer,
+    awwCanvasWrapper,
+    toolbar,
+    colorWheelCanvas,
+    colorWheelPicker,
+    customColorsRow,
+    addColorPlusEl,
+    boardNameField,
+    loader,
+    accountButton,
+    loginRegisterButton,
+    mobileLoginRegisterButton,
+    chatNameInput,
+    changeNameDoneButton,
+    changeNameButton,
+    chatbox,
+    chatMessages,
+    chatContent,
+    chatHeaderNormal,
+    chatInput,
+    nextPageButton,
+    prevPageButton,
+    newPageButton,
+    gotoPageButton,
+    zoomLevelText,
+    panButton,
+    fullscreen,
+    fullscreenIcon,
+    redoButton;
 
 let pdfExportInProgress = false,
-  isInFullscreen = false,
-  openedMenu,
-  loadingCount = 0;
+    isInFullscreen = false,
+    openedMenu,
+    loadingCount = 0;
 
 let isChatVisible = false,
-  chatWasClosed = false,
-  lastTimestampTime,
-  defaultAvatarPath = ASSETS_PATH + '/ic-avatar.svg';
+    chatWasClosed = false,
+    isInIframe = false,
+    lastTimestampTime,
+    defaultAvatarPath = ASSETS_PATH + '/ic-avatar.svg';
 
 let openedToolboxParentId,
-  toolsInToolbar = DEFAULT_TOOLBAR,
-  defaultColors = COLORS,
-  monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-  ];
+    toolsInToolbar = DEFAULT_TOOLBAR,
+    defaultColors = COLORS,
+    monthShortNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
 
 let sliderPercTick = 90 / (SIZES.length - 1); // 15
 let movingSlider,
-  sliderWidth,
-  sliderStartingPoint,
-  sliderParentId,
-  sliderIndex,
-  sliderText,
-  newSliderSize;
+    sliderWidth,
+    sliderStartingPoint,
+    sliderParentId,
+    sliderIndex,
+    sliderText,
+    newSliderSize;
 
 let dotHalfSize = 9,
-  colorWheelSize,
-  colorWheelCanvasCtx,
-  relativeStartingPoint,
-  newColorEl,
-  newColor,
-  customColors = [];
+    colorWheelSize,
+    colorWheelCanvasCtx,
+    relativeStartingPoint,
+    newColorEl,
+    newColor,
+    customColors = [];
 
 function initToolbar() {
 
@@ -254,10 +255,10 @@ function initToolbar() {
     chatButton.on('click', function (e) {
         closeMenus();
         if (isChatVisible) {
-          unshow(chatbox);
+            unshow(chatbox);
         } else {
-          show(chatbox);
-          chatInput.focus();
+            show(chatbox);
+            chatInput.focus();
         }
         isChatVisible = !isChatVisible;
     });
@@ -270,10 +271,10 @@ function initToolbar() {
 
     chatNameInput.on('keyup', (e) => {
         if ((e.keyCode == '13') || (e.key && e.key.toLowerCase() == 'enter')) {
-        e.preventDefault();
-        e.stopPropagation();
-        userNameChanged();
-    }
+            e.preventDefault();
+            e.stopPropagation();
+            userNameChanged();
+        }
     });
 
     chatInput.on('keyup', (e) => sendChat(handleMessages, e));
@@ -297,10 +298,10 @@ function initToolbar() {
         if (isNaN(nextPage)) return;
 
         aww.getLastPage(page => {
-          if (nextPage >= 0 && nextPage <= page) {
-            aww.setPage(nextPage);
-            recomputePagination();
-          }
+            if (nextPage >= 0 && nextPage <= page) {
+                aww.setPage(nextPage);
+                recomputePagination();
+            }
         });
     });
 
@@ -399,17 +400,17 @@ function initToolbar() {
     let mobileToolbarButtons = boardMenus.find('.js-mobile-tools');
     mobileToolbarButtons.on('click', (e) => {
         let showBtn = mobileToolbarButtons.find('.js-open-tools'),
-        hideBtn = mobileToolbarButtons.find('.js-close-tools'),
-        shouldOpen = !showBtn.hasClass('is--hidden');
+            hideBtn = mobileToolbarButtons.find('.js-close-tools'),
+            shouldOpen = !showBtn.hasClass('is--hidden');
 
-    closeMenus();
+        closeMenus();
 
-    if (shouldOpen) {
-        toolbar.removeClass('mobile--hidden');
-        showBtn.addClass('is--hidden');
-        hideBtn.removeClass('is--hidden');
-    }
-});
+        if (shouldOpen) {
+            toolbar.removeClass('mobile--hidden');
+            showBtn.addClass('is--hidden');
+            hideBtn.removeClass('is--hidden');
+        }
+    });
 
 }
 
@@ -425,15 +426,15 @@ function initCustomColors() {
 
 function prevPage() {
     aww.getCurrentPage((page) => {
-      aww.setPage(page - 1);
-      recomputePagination();
+        aww.setPage(page - 1);
+        recomputePagination();
     });
 }
 
 function nextPage() {
     aww.getCurrentPage((page) => {
-      aww.setPage(page + 1);
-      recomputePagination();
+        aww.setPage(page + 1);
+        recomputePagination();
     });
 }
 
@@ -441,15 +442,15 @@ function addDropdownClickEvent(menuButton, dropdownMenu, readOnlyAvailable) {
 
     menuButton.on('click', function (e) {
         aww.getCurrentUser((user) => {
-          if (user.status === 'RO' && !readOnlyAvailable) return;
+            if (user.status === 'RO' && !readOnlyAvailable) return;
 
-          if (dropdownMenu.hasClass(VISIBLE_CLASS)) {
-            dropdownMenu.removeClass(VISIBLE_CLASS);
-          } else {
-            closeMenus();
-            openedMenu = dropdownMenu;
-            dropdownMenu.addClass(VISIBLE_CLASS);
-          }
+            if (dropdownMenu.hasClass(VISIBLE_CLASS)) {
+                dropdownMenu.removeClass(VISIBLE_CLASS);
+            } else {
+                closeMenus();
+                openedMenu = dropdownMenu;
+                dropdownMenu.addClass(VISIBLE_CLASS);
+            }
         });
     });
 }
@@ -583,10 +584,10 @@ function handleMessages(message, uid, time) {
         let line;
         // if more than 2 minutes passed
         if (!lastTimestampTime || (lastTimestampTime - time)/1000 > 2) {
-          let formattedTime = formatTime(time);
-          let timestamp = $('<time class="message__timestamp">' + formattedTime + '</time>');
-          chatMessages.append(timestamp);
-          lastTimestampTime = time;
+            let formattedTime = formatTime(time);
+            let timestamp = $('<time class="message__timestamp">' + formattedTime + '</time>');
+            chatMessages.append(timestamp);
+            lastTimestampTime = time;
         }
 
         let isMe = me.uid === uid;
@@ -595,15 +596,15 @@ function handleMessages(message, uid, time) {
             let meClass = isMe ? ' self' : '';
 
             line = $('<div class="message">' +
-              (meClass ? '' : '<div class="message__avatar">' +
-                '<img src="' + (user && user.avatarThumbUrl ? user.avatarThumbUrl : defaultAvatarPath) + '" width="20" height ="20">' +
-                '</div>') +
-              '<div class="message__box' + meClass + '">' +
-              '<div class="message__content">' +
-              '<p class="paragraph"></p>' +
-              '</div>' +
-              '</div>' +
-              '</div>');
+                (meClass ? '' : '<div class="message__avatar">' +
+                    '<img src="' + (user && user.avatarThumbUrl ? user.avatarThumbUrl : defaultAvatarPath) + '" width="20" height ="20">' +
+                    '</div>') +
+                '<div class="message__box' + meClass + '">' +
+                '<div class="message__content">' +
+                '<p class="paragraph"></p>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
 
             line.find('p.paragraph').text(message);
             chatMessages.append(line);
@@ -675,7 +676,7 @@ function recomputePagination() {
         aww.getLastPage((lastPage) => {
 
             let onFirstPage = (currentPage === 0),
-            onLastPage = (currentPage >= lastPage);
+                onLastPage = (currentPage >= lastPage);
 
             if (onFirstPage) {
                 disable(prevPageButton);
@@ -727,17 +728,17 @@ function mainToolbarButtonClicked(toolId) {
 
     }  else if (toolId === 'image') {
 
-      aww.uploadImageFromComputer(
-        image => console.log('Image is fetched from computer...'),
-        opData => console.log('Image is converted to operation...', opData)
-      );
+        aww.uploadImageFromComputer(
+            image => console.log('Image is fetched from computer...'),
+            opData => console.log('Image is converted to operation...', opData)
+        );
 
     } else if (toolId === 'presentation') {
 
-      aww.uploadPresentationFromComputer(
-        presentationUrl => console.log('Presentation is uploaded to server...', presentationUrl),
-        opData => console.log('Presentation is converted to operation...', opData)
-      );
+        aww.uploadPresentationFromComputer(
+            presentationUrl => console.log('Presentation is uploaded to server...', presentationUrl),
+            opData => console.log('Presentation is converted to operation...', opData)
+        );
 
     } else if (TOOLS.includes(toolId)) {
 
@@ -934,28 +935,28 @@ function addColorEl(color, colorIndex, isSelected) {
     newColorEl = $('<div class="predefined__color" style="background-color: ' + color + '">');
     let newEl = $('<li class="tools__item" id="aww-toolbar-color-' + colorIndex + '"></li>').append(
         $('<div class="tools__item--button' + (isSelected ? ' ' + SELECTED_CLASS : '') + '"></div>').append(
-          newColorEl
+            newColorEl
         )
     );
-  newEl.insertBefore(customColorsRow.children()[customColorsRow.children().length - 1]);
+    newEl.insertBefore(customColorsRow.children()[customColorsRow.children().length - 1]);
 }
 
 function changeChatName() {
-  if (!chatHeaderNormal.hasClass(EDITING_CLASS)) {
-    chatHeaderNormal.addClass(EDITING_CLASS);
-    chatNameInput.removeAttr('readonly');
-    chatNameInput.focus();
-    chatNameInput.select();
-  }
+    if (!chatHeaderNormal.hasClass(EDITING_CLASS)) {
+        chatHeaderNormal.addClass(EDITING_CLASS);
+        chatNameInput.removeAttr('readonly');
+        chatNameInput.focus();
+        chatNameInput.select();
+    }
 }
 
 function userNameChanged() {
-  let name = chatNameInput.val();
+    let name = chatNameInput.val();
 
-  if(name) aww.setUserName(name);
+    if(name) aww.setUserName(name);
 
-  chatHeaderNormal.removeClass(EDITING_CLASS);
-  chatNameInput.attr('readonly', '');
+    chatHeaderNormal.removeClass(EDITING_CLASS);
+    chatNameInput.attr('readonly', '');
 }
 
 function reorderCustomColors() {
@@ -982,15 +983,15 @@ function setupSlider(toolbox) {
 }
 
 function showLoader(loading) {
-  if (!loading) return;
+    if (!loading) return;
 
-  loadingCount += loading;
-  if (loadingCount > 0) {
-    loader.addClass(LOADING_CLASS);
-  } else {
-    loadingCount = 0; // ensure it's never negative
-    loader.removeClass(LOADING_CLASS);
-  }
+    loadingCount += loading;
+    if (loadingCount > 0) {
+        loader.addClass(LOADING_CLASS);
+    } else {
+        loadingCount = 0; // ensure it's never negative
+        loader.removeClass(LOADING_CLASS);
+    }
 }
 
 function showRedoButton(change) {
