@@ -94,6 +94,9 @@ let boardMenus,
     nextPageButton,
     prevPageButton,
     newPageButton,
+    lockPageButton,
+    lockIcon,
+    unlockIcon,
     gotoPageButton,
     zoomLevelText,
     panButton,
@@ -179,6 +182,9 @@ function initToolbar() {
     nextPageButton = boardMenus.find('#next-page');
     prevPageButton = boardMenus.find('#prev-page');
     newPageButton = boardMenus.find('#new-page');
+    lockPageButton = boardMenus.find('#lock-page');
+    lockIcon = boardMenus.find('#lock-icon');
+    unlockIcon = boardMenus.find('#unlock-icon');
     gotoPageButton = boardMenus.find('.pagination--boards');
     zoomLevelText = boardMenus.find('#zoom-level-text');
     panButton = boardMenus.find('#pan');
@@ -287,6 +293,10 @@ function initToolbar() {
 
     nextPageButton.on('click', function() {
         nextPage();
+    });
+
+    lockPageButton.on('click', function() {
+        toggleLockPage();
     });
 
     newPageButton.on('click', function() {
@@ -436,6 +446,10 @@ function nextPage() {
         aww.setPage(page + 1);
         recomputePagination();
     });
+}
+
+function toggleLockPage() {
+    aww.pausedPage = !aww.pausedPage;
 }
 
 function addDropdownClickEvent(menuButton, dropdownMenu, readOnlyAvailable) {
