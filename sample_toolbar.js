@@ -449,7 +449,17 @@ function nextPage() {
 }
 
 function toggleLockPage() {
-    aww.pausedPage = !aww.pausedPage;
+    aww.getCurrentUser((me) => {
+        let pageLocked = me.pageLocked;
+        if (pageLocked) {
+            hide(unlockIcon);
+            unhide(lockIcon);
+        } else {
+            hide(lockIcon);
+            unhide(unlockIcon);
+        }
+        aww.setPageLock(pageLocked);
+    })
 }
 
 function addDropdownClickEvent(menuButton, dropdownMenu, readOnlyAvailable) {
