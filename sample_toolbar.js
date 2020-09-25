@@ -450,7 +450,7 @@ function nextPage() {
 
 function toggleLockPage() {
     aww.getCurrentUser((me) => {
-        let pageLocked = me.pageLocked;
+        let pageLocked = !me.pageLocked;
         if (pageLocked) {
             hide(unlockIcon);
             unhide(lockIcon);
